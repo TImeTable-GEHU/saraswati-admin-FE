@@ -1,13 +1,15 @@
 import React from 'react' ;
 
 import './App.css'
+import CreateTest from './CreateTest';
 
 function App() {
   
 
   return (
     <>
-     <p className='text-center'>Saraswati admin frontend</p>
+     
+     <CreateTest/>
     </>
   )
 }
