@@ -61,7 +61,7 @@ export default function CreateTest() {
       {/* Test Input Fields */}
       <div className="space-y-8 ml-56">
         <input type="text" placeholder="Contest Name" className="block w-[calc(100%-14rem)] bg-gray-300 p-2 rounded" />
-        <input type="text" placeholder="Contest Desc." className="block w-[calc(100%-14rem)] bg-gray-300 p-2 rounded" />
+        <textarea placeholder="Contest Desc." className="block w-[calc(100%-14rem)] bg-gray-300 p-2 rounded h-24 resize-none"></textarea>
         <div className="flex flex-wrap gap-4">
           <input type="text" placeholder="Time and Date" className="block w-[calc(50%-7rem)] bg-gray-300 p-2 rounded" />
           <input type="text" placeholder="Duration" className="block w-[calc(50%-8rem)] bg-gray-300 p-2 rounded" />

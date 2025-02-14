@@ -1,17 +1,18 @@
-import React from 'react' ;
-
-import './App.css'
-import CreateTest from './CreateTest';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import "./App.css";
+import CreateTest from "./CreateTest";
+import UpcomingTests from "./Upcoming";
 
 function App() {
-  
-
   return (
-    <>
-     
-     <CreateTest/>
-    </>
-  )
+    <Router>
+      <Routes>
+        <Route path="/" element={<CreateTest />} />
+        <Route path="/upcoming-tests" element={<UpcomingTests />} />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
