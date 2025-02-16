@@ -13,7 +13,7 @@ const Leaderboard = () => {
             const response = await fetch(endpoint);
             const data = await response.json();
             console.log(data);
-            setData(data); // Store the fetched data in state
+            setData(data);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -116,7 +116,7 @@ const Leaderboard = () => {
                     <div className="py-2 px-4 w-1/3">Score</div>
                 </div>
                 {data.map((item) => (
-                    <div key={item.id} className="flex my-2 border-2 rounded-xl">
+                    <div key={item.id} className="flex my-2 border-2 rounded-xl bg-blue-200">
                         <div className="px-4 py-2 w-1/3">{item.title}</div>
                         <div className="px-4 py-2 w-1/3">{item.id}</div>
                         <div className="px-4 py-2 w-1/3">100</div>
