@@ -1,27 +1,21 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import { useNavigate } from "react-router-dom";
-
+import axios from "axios";
+import { Search } from 'lucide-react';
 const AdminPage = () => {
   const navigate = useNavigate();
-
-  // Default test data (Simulating a large number of tests)
-  const [tests] = useState([
-    { id: 1, title: "TEST 1" },
-    { id: 2, title: "TEST 2" },
-    { id: 3, title: "TEST 3" },
-    { id: 4, title: "TEST 4" },
-    { id: 5, title: "TEST 5" },
-    { id: 6, title: "TEST 6" },
-    { id: 7, title: "TEST 7" },
-    { id: 8, title: "TEST 8" },
-    { id: 9, title: "TEST 9" },
-    { id: 10, title: "TEST 10" }
-  ]);
-
+  const [DropdownOpen,Dropdownclose] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [visibleCount, setVisibleCount] = useState(8);
+  const [tests, setTests] = useState([]);
 
-  // Filtered tests based on search input
+  useEffect(() => {
+    axios.get("http://localhost:5000/api/tests")
+      .then(response => setTests(response.data))
+      .catch(error => console.error("Error fetching tests:", error));
+  }, []);
+  
+
   const filteredTests = tests.filter((test) =>
     test.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -58,25 +52,46 @@ const AdminPage = () => {
         </div>
       </div>
 
+
       {/* Main Content */}
       <div className="ml-1/4 flex-grow pl-[25%]">
         <div className="flex justify-between items-center bg-white p-6 shadow">
           <h2 className="text-2xl font-bold">ADMIN PAGE</h2>
-          <button onClick={() => alert("Viewing Profile...")} className="block">
+          <button onClick={()=>Dropdownclose(!DropdownOpen)} className="block">
             <img src="/profile image.png" alt="Profile" className="w-10 h-10 rounded-full" />
           </button>
+          {DropdownOpen && (
+            <div className="absolute right-0 mt-130 w-90 h-120 bg-white shadow-lg rounded-lg z-10">
+            <ul className="py-2">
+              <div className="mb-2 flex items-center justify-center">
+                <img src="/profile image.png" alt="profile" className=" w-35 h-35" />
+              </div>
+              <li className="flex justify-center font-bold px-4 py-2 cursor-pointer">Orgination name</li>
+              <li className="px-4 py-2 cursor-pointer">Name: Admin</li>
+              <li className="px-4 py-2 cursor-pointer">Email: admin@example.com</li>
+              <li className="px-4 py-2 cursor-pointer border-t" onClick={() => alert("Logging out...")}>
+                Logout
+              </li>
+            </ul>
+            </div>
+          )
+          }
         </div>
 
         <div className="mt-6 p-6">
           <div className="flex flex-row md:flex-row justify-between items-center mb-4 gap-4">
             <h3 className="text-lg font-bold">Previous Tests</h3>
+            <div className="relative w-full max-w-xs">
             <input
               type="text"
               placeholder="Search"
-              className="pl-5 border-0 p-2 rounded-full bg-white"
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-full bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" />
+          </div>
+
           </div>
 
           <div className="space-y-3">
