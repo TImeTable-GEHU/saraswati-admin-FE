@@ -1,33 +1,25 @@
-import { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Link, useLocation } from 'react-router-dom';
-import './App.css';
-import Leaderboard from './Leaderboard'; // Import the Leaderboard component
+import React from 'react'
+import Leaderboard from './Components/Leaderboard'
 
-function App() {
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import Home from './Components/Home'
 
-  return (
-    <Router>
-      <AppContent />
-    </Router>
-  );
-}
-
-function AppContent() {
-  const location = useLocation();
-
+const App = () => {
+  const router= createBrowserRouter([
+    {
+      path:"/",
+      element:<Home/>
+    },
+    {
+      path:"/leaderboard",
+      element:<Leaderboard/>
+    },
+  ])
   return (
     <>
-      {location.pathname !== '/leaderboard' && (
-        <>
-          <div className="bg-black text-white">Saraswati Admin</div>
-          <div><Link to="/leaderboard">Leaderboard</Link></div>
-        </>
-      )}
-      <Routes>
-        <Route path="/leaderboard" element={<Leaderboard />} />
-      </Routes>
+    <RouterProvider router={router}/>
     </>
-  );
+  )
 }
 
-export default App;
+export default App

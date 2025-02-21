@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import profileImage from './assets/profile.png';
+import profileImage from '../assets/profile.png';
+import  '../App.css'
 
 const Leaderboard = () => {
     const [first, setFirst] = useState(profileImage);
@@ -53,7 +54,7 @@ const Leaderboard = () => {
                     <button
                         onClick={() => handleButtonClick('https://jsonplaceholder.typicode.com/albums', 'ALL')}
                         type="button"
-                        className={`text-white ${selectedButton === 'ALL' ? 'bg-gray-800' : 'bg-blue-700 hover:bg-blue-800 focus:bg-gray-800'} font-medium rounded-xl text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800`}
+                        className={`${selectedButton === 'ALL' ? 'bg-gray-800' : 'bg-blue-700 hover:bg-blue-800 focus:bg-gray-800'} text-white font-medium rounded-xl text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800`}
                     >
                         ALL
                     </button>
@@ -81,7 +82,7 @@ const Leaderboard = () => {
                     <button
                         onClick={() => handleButtonClick('https://jsonplaceholder.typicode.com/albums?userId=4', 'HLD')}
                         type="button"
-                        className={`text-white ${selectedButton==='HLD'?'bg-gray-800' : 'bg-blue-700 hover:bg-blue-800 focus:bg-gray-800'} font-medium rounded-xl text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800`}
+                        className={`text-white ${selectedButton === 'HLD' ? 'bg-gray-800' : 'bg-blue-700 hover:bg-blue-800 focus:bg-gray-800'} font-medium rounded-xl text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800`}
                     >
                         HLD
                     </button>
@@ -90,20 +91,20 @@ const Leaderboard = () => {
 
             <div className="top_three w-full h-80 my-5 p-5 rounded-2xl flex">
                 <div className="second w-1/3 h-full border-black flex flex-col items-center justify-end">
-                    <div className="image flex items-center justify-center mb-2">
-                        <img width={180} src={second} className='rounded-full' alt="Profile" />
+                    <div className="image flex items-center justify-center mb-2 ">
+                        <img width={180} src={second} className='rounded-full object-cover' alt="Profile" />
                     </div>
                     <div className="text mb-2">Second</div>
                 </div>
                 <div className="first w-1/3 h-full border-black flex flex-col items-center justify-start">
                     <div className="image flex items-center justify-center mb-2">
-                        <img width={180} src={first} className='rounded-full' alt="Profile" />
+                        <img width={180} src={first} className='rounded-full object-cover' alt="Profile" />
                     </div>
                     <div className="text mb-2">First</div>
                 </div>
                 <div className="third w-1/3 h-full border-black flex flex-col items-center justify-end">
                     <div className="image flex items-center justify-center mb-2">
-                        <img width={180} src={third} className='rounded-full' alt="Profile" />
+                        <img width={180} src={third} className='rounded-full object-cover' alt="Profile" />
                     </div>
                     <div className="text mb-2">Third</div>
                 </div>
