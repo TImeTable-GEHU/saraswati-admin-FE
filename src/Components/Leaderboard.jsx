@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import profileImage from '../assets/profile.png';
-import  '../App.css'
+import '../App.css';
 
 const Leaderboard = () => {
     const [first, setFirst] = useState(profileImage);
@@ -41,15 +41,15 @@ const Leaderboard = () => {
     }, []);
 
     const handleButtonClick = (endpoint, buttonName) => {
-        console.log("Updating page elements.")
+        console.log("Updating page elements.");
         fetchData(endpoint);
         fetchImageData();
         setSelectedButton(buttonName);
     };
 
     return (
-        <>
-            <div className="top_bar bg-gray-200 rounded-2xl px-5 py-2">
+        <main className="py-5 px-20 relative">
+            <div className=" bg-gray-200 rounded-2xl px-5 py-2 w-1/2 mx-auto">
                 <ul className='flex justify-between items-center'>
                     <button
                         onClick={() => handleButtonClick('https://jsonplaceholder.typicode.com/albums', 'ALL')}
@@ -110,21 +110,29 @@ const Leaderboard = () => {
                 </div>
             </div>
 
-            <div className="board rounded-2xl overflow-hidden">
-                <div className="flex p-4 bg-black text-white text-2xl rounded-2xl">
-                    <div className="py-2 px-4 w-1/3">Name</div>
-                    <div className="py-2 px-4 w-1/3">University Roll No.</div>
-                    <div className="py-2 px-4 w-1/3">Score</div>
-                </div>
-                {data.map((item) => (
-                    <div key={item.id} className="flex my-2 border-2 rounded-xl bg-blue-200">
-                        <div className="px-4 py-2 w-1/3">{item.title}</div>
-                        <div className="px-4 py-2 w-1/3">{item.id}</div>
-                        <div className="px-4 py-2 w-1/3">100</div>
-                    </div>
-                ))}
+            <div className="board  overflow-hidden">
+                <table className="min-w-full bg-white">
+                    <thead>
+                        <tr className="w-full bg-gray-800 text-white">
+                            <th className="py-2 px-4 text-start">Name</th>
+                            <th className="py-2 px-4 ">University Roll No.</th>
+                            <th className="py-2 px-4">Rank</th>
+                            <th className="py-2 px-4">Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {data.map((item) => (
+                            <tr key={item.id} className="border-b">
+                                <td className="py-2 px-4">{item.title}</td>
+                                <td className="py-2 px-4 text-center">{item.id}</td>
+                                <td className="py-2 px-4 text-center">Rank</td>
+                                <td className="py-2 px-4 text-center">100</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             </div>
-        </>
+        </main>
     );
 }
 

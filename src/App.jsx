@@ -3,6 +3,7 @@ import Leaderboard from './Components/Leaderboard'
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Home from './Components/Home'
+import Students from './Components/Students'
 
 const App = () => {
   const router= createBrowserRouter([
@@ -14,6 +15,10 @@ const App = () => {
       path:"/leaderboard",
       element:<Leaderboard/>
     },
+    {
+      path:"/students",
+      element:<Students/>
+    }
   ])
   return (
     <>
