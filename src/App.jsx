@@ -1,16 +1,26 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from 'react';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import AdminPage from './Pages/AdminPage';
+import UpdateAdmin from './Pages/UpdateAdmin';
+import './index.css';
 
-function App() {
-  const [count, setCount] = useState(0)
+const router = createBrowserRouter([
+  {
+    path: "/Adminpage",
+    element: <AdminPage /> // Home page
+  },
+  {
+    path: "/UpdateAdmin",
+    element: <UpdateAdmin />
+  }
+]);
 
+const App = () => {
   return (
     <>
-      <div className="bg-black text-white">Saraswati Admin</div>
+      <RouterProvider router={router} />
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;
