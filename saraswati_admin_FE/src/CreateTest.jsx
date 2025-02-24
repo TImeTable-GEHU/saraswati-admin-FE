@@ -79,7 +79,7 @@ export default function CreateTest() {
     <div className="p-8 bg-gray-100 min-h-screen">
       {/* Test Description Header */}
       <div className="my-8 text-center">
-        <h2 className="bg-blue-950 text-white rounded py-2 px-6 w-fit mx-auto text-lg font-semibold">
+        <h2 className="bg-blue-600 text-white rounded py-2 px-6 w-fit mx-auto text-lg font-semibold">
           Test Details
         </h2>
       </div>
@@ -208,7 +208,7 @@ export default function CreateTest() {
 
       {/* Create Test Button */}
       <div className="text-center mt-8">
-       <Link to="/"> <button className="bg-blue-800 cursor-pointer hover:bg-blue-950 text-white py-2 px-6 rounded">Create Test</button>
+       <Link to="/"> <button className="bg-blue-600 cursor-pointer hover:bg-blue-800 text-white py-2 px-6 rounded">Create Test</button>
        </Link>
       </div>
     </div>

@@ -21,8 +21,8 @@ const TestCard = ({ id, title, date, onDelete }) => {
   return (
     <div className="bg-white p-6 rounded-lg shadow flex justify-between items-center">
       <div>
-        <h3 className="text-xl font-bold">{title}</h3>
-        <p className="font-semibold text-gray-600">{date}</p>
+        <h3 className="text-xl font-bold text-gray-700 ">{title}</h3>
+        <p className="font-semibold text-blue-600 ">{date}</p>
       </div>
       <div className="space-x-2">
         <Link to={"/createTest"}><Button label="Update" /></Link>
@@ -71,11 +71,11 @@ const UpcomingTests = () => {
     <div className="min-h-screen flex justify-center">
       <div className="bg-white w-screen rounded-lg shadow-lg">
         <div className="flex justify-between p-6 mb-4">
-          <button className="px-4 py-1 bg-gray-600 text-white rounded">Back</button>
+          <button className="px-4 py-1 bg-gray-600 hover:bg-gray-700 text-white rounded">Back</button>
           <h2 className="text-4xl font-bold text-center">Upcoming Tests</h2>
           <div className="w-8 h-8 bg-gray-300 rounded-full"></div>
         </div>
-        <div className="bg-gray-600 p-12 h-screen">
+        <div className="bg-gray-200 p-12 h-screen">
           <div className="mb-8 grid justify-items-end">
             <SearchBar value={search} onChange={(e) => setSearch(e.target.value)} />
           </div>
