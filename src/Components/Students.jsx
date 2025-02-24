@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import profileImage from '../assets/profile.png';
 import PopUp from './PopUp';
 import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Papa from 'papaparse';
 
 const Students = () => {
     const notify = () => toast("Data updated successfully.");
@@ -9,6 +11,7 @@ const Students = () => {
     const [data, setData] = useState([]);
     const [filterval, setFilterval] = useState("");
     const [popUpData, setPopUpData] = useState(null);
+    const [selectedFile,setSelectedFile]=useState(null)
 
     const fetchData = async (endpoint) => {
         try {
@@ -25,17 +28,23 @@ const Students = () => {
     }, []);
 
     const handleDelete = (studentId) => {
-        const confirmed = window.confirm("Are you sure you want to delete this student?");
+        const confirmed = window.confirm("Are you sure you want to delete this student? \n This action is irreversible.");
         if (confirmed) {
             setData(data.filter(student => student.id !== studentId));
             toast(`Student ${studentId} deleted successfully.`);
         }
     };
 
+    const updateStudent = (id, name, section) => {
+        setData(data.map(student => student.id === id ? { ...student, title: name, section: section } : student));
+    };
+
+   
+
     return (
         <main className="py-5 px-20 relative">
             <ToastContainer />
-            {popUpData && <PopUp user={popUpData} ExitPopUp={() => setPopUpData(null)} notifyFUN={() => notify()} />}
+            {popUpData && <PopUp user={popUpData} ExitPopUp={() => setPopUpData(null)} notifyFUN={() => notify()} updateStudent={updateStudent} />}
             <div>
                 <div className='flex justify-between items-center'>
                     <h2 className='text-4xl font-bold text-gray-800'>Manage Students</h2>
@@ -58,7 +67,7 @@ const Students = () => {
             <div className="">
                 <div className="max-w-md mx-auto">
                     <label className="text-base text-gray-500 font-semibold mb-2 block text-center">Add Students List</label>
-                    <input type="file"
+                    <input /*onChange={handleFileUpload}*/ type="file"
                         className="w-full text-gray-400 font-semibold text-sm bg-white border file:cursor-pointer cursor-pointer file:border-0 file:py-3 file:px-4 file:mr-4 file:bg-gray-100 file:hover:bg-gray-200 file:text-gray-500 rounded" />
                 </div>
             </div>
@@ -88,7 +97,7 @@ const Students = () => {
                             <tr key={student.id} className="border-b">
                                 <td className="py-2 px-4 ">{student.title}</td>
                                 <td className="py-2 px-4 text-center">{student.id}</td>
-                                <td className="py-2 px-4 text-center">B.Tech CSE III D</td>
+                                <td className="py-2 px-4 text-center">{student.section || "B.Tech CSE III D"}</td>
                                 <td className="py-2 px-4 text-center">
                                     <button onClick={() => setPopUpData(student)}
                                         className="px-4 py-1 rounded-full bg-gradient-to-b from-blue-500 to-blue-600 text-white focus:ring-2 focus:ring-blue-400 hover:shadow-xl transition duration-200 mx-1">

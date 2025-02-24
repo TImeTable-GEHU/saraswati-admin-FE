@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const PopUp = ({ user, ExitPopUp, notifyFUN }) => {
+const PopUp = ({ user, ExitPopUp, notifyFUN, updateStudent }) => {
+  const [name, setName] = useState(user.title);
+  const [section, setSection] = useState("B.Tech CSE III D");
 
   const handleClick = () => {
-    notifyFUN(); ExitPopUp();
+    updateStudent(user.id, name, section);
+    notifyFUN();
+    ExitPopUp();
   }
 
   console.log("user", user);
@@ -24,9 +28,35 @@ const PopUp = ({ user, ExitPopUp, notifyFUN }) => {
             </svg>
           </button>
         </div>
-        <div className='text-center text-black mb-4'>
-          <div className='text-2xl font-bold'>{user.id}</div>
-          <div className='text-lg'>{user.title}</div>
+        <div className='text-center text-black mb-4 flex-col text-2xl'>
+          <form>
+            <div className="mb-4">
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
+                Update Name
+              </label>
+              <input
+                type="text"
+                id="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                placeholder="Enter name"
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="section">
+                Update Section
+              </label>
+              <input
+                type="text"
+                id="section"
+                value={section}
+                onChange={(e) => setSection(e.target.value)}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                placeholder="Enter section"
+              />
+            </div>
+          </form>
         </div>
         <div className='flex items-center justify-center mx-1'>
           <button onClick={handleClick}
