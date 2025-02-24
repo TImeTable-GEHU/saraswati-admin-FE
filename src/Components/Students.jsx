@@ -50,7 +50,7 @@ const Students = () => {
             <div>
                 <div className='flex justify-between items-center'>
                     <h2 className='text-4xl font-bold text-gray-800'>Manage Students</h2>
-                    <img id="ganshu" width="50" src='https://d.gehu.ac.in/uploads/image/E3KQXnnu-Prof-Dr-Kamal-Ghanshala.jpg' className='rounded-full fixed top-10 right-10' alt="Profile"/>
+                    <img  width="50" src={profileImage} className='rounded-full relative top-10 right-10' alt="Profile"/>
                 </div>
             </div>
             <div className='flex p-5 justify-start'>
