@@ -1,14 +1,15 @@
 import React, { useState } from "react";
-import { X, CirclePlus, Trash2, CheckCircle } from "lucide-react"; // Importing icons
-
+import { X, CirclePlus, Trash2, CheckCircle, Image } from "lucide-react"; // Importing icons
+import {Link} from "react-router-dom";
 export default function CreateTest() {
   const [questions, setQuestions] = useState([
-    { text: "", options: ["Option 1", "Option 2"], correctOption: null },
+    { text: "", options: ["Option 1", "Option 2"], correctOption: null, marks: 0 },
   ]);
-
+  
+ 
   // Function to add a new question
   const addQuestion = () => {
-    setQuestions([...questions, { text: "", options: ["Option 1", "Option 2"], correctOption: null }]);
+    setQuestions([...questions, { text: "", options: ["Option 1", "Option 2"], correctOption: null, marks: 0 }]);
   };
 
   // Function to update question text
@@ -48,23 +49,55 @@ export default function CreateTest() {
     updatedQuestions[qIndex].correctOption = oIndex;
     setQuestions(updatedQuestions);
   };
+  const updateMarks = (index, value) => {
+    const marks = value === "" ? 0 : parseInt(value, 10);
+    const updatedQuestions = [...questions];
+    updatedQuestions[index].marks = marks;
+    setQuestions(updatedQuestions);
+  };
+  const totalMarks = questions.reduce((sum, q) => sum + (q.marks || 0), 0);
+  
+  // Function to handle image upload for a question or option
+  const handleImageUpload = (e, qIndex, oIndex = null) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const updatedQuestions = [...questions]; 
+        if (oIndex === null) {
+          updatedQuestions[qIndex].image = reader.result;
+        } else {
+          updatedQuestions[qIndex].options[oIndex].image = reader.result;
+        }
+        setQuestions(updatedQuestions);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   return (
     <div className="p-8 bg-gray-100 min-h-screen">
       {/* Test Description Header */}
       <div className="my-8 text-center">
         <h2 className="bg-blue-950 text-white rounded py-2 px-6 w-fit mx-auto text-lg font-semibold">
-          Test Description
+          Test Details
         </h2>
       </div>
 
+
       {/* Test Input Fields */}
-      <div className="space-y-8 ml-56">
-        <input type="text" placeholder="Contest Name" className="block w-[calc(100%-14rem)] bg-gray-300 p-2 rounded" />
-        <textarea placeholder="Contest Desc." className="block w-[calc(100%-14rem)] bg-gray-300 p-2 rounded h-24 resize-none"></textarea>
+      <div className="space-y-8 ml-56 ">
+       
+        <input type="text" placeholder="Test Name" name="Name" className="block w-[calc(100%-14rem)] bg-gray-300 p-2 rounded" />
+        <textarea placeholder="Test Desc." className="block w-[calc(100%-14rem)] bg-gray-300 p-2 rounded h-24 resize-none"></textarea>
         <div className="flex flex-wrap gap-4">
           <input type="text" placeholder="Time and Date" className="block w-[calc(50%-7rem)] bg-gray-300 p-2 rounded" />
           <input type="text" placeholder="Duration" className="block w-[calc(50%-8rem)] bg-gray-300 p-2 rounded" />
+        </div>
+        <div className="flex justify-between mr-56">
+        <span className="mr-4">Total Questions: {questions.length}</span>
+        <span className="">Total Marks: {totalMarks}</span>
+
         </div>
       </div>
 
@@ -73,31 +106,51 @@ export default function CreateTest() {
         {questions.map((q, qIndex) => (
           <div key={qIndex} className="mb-6 p-4 bg-gray-200 rounded shadow-md">
             <div className="flex justify-between items-center mb-4">
+             
               <span className="font-semibold">Question {qIndex + 1} :-</span>
               <div className="text-sm flex items-center gap-2">
-                <span className="mr-4">Total Questions: {questions.length}</span>
-                <span>Total Marks: 05</span>
-                <Trash2
-                  size={20}
-                  className="cursor-pointer text-red-500 hover:text-red-700"
-                  onClick={() => removeQuestion(qIndex)}
-                />
-              </div>
+  <label htmlFor="marks">Marks</label>
+  <input
+  type="number"
+  value={q.marks === 0 ? "" : q.marks}  // Show empty if 0, otherwise show marks
+  onChange={(e) => updateMarks(qIndex, e.target.value)}
+  className="border-b-2 border-gray-300 focus:border-blue-500 hover:border-blue-500 focus:outline-none w-16 py-1 px-2 appearance-none [-moz-appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+/>
+
+  <Trash2
+    size={20}
+    className="cursor-pointer text-red-500 hover:text-red-700"
+    onClick={() => removeQuestion(qIndex)}
+  />
+</div>
+
             </div>
 
-            {/* Question Input */}
-            <input
-              type="text"
-              value={q.text}
-              onChange={(e) => updateQuestionText(qIndex, e.target.value)}
-              placeholder="Enter your question here..."
-              className="block w-full bg-gray-300 p-2 rounded mb-4"
-            />
+            {/* Question Input with Image Icon */}
+            <div className="relative">
+              <input
+                type="text"
+                value={q.text}
+                onChange={(e) => updateQuestionText(qIndex, e.target.value)}
+                placeholder="Enter your question here..."
+                className="block w-full bg-gray-300 p-2 rounded pr-10" 
+              />
+              <label htmlFor={`question-upload-${qIndex}`} className="absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer text-blue-500">
+                <Image size={24} />
+              </label>
+              <input
+                type="file"
+                id={`question-upload-${qIndex}`}
+                className="hidden"
+                accept="image/*"
+                onChange={(e) => handleImageUpload(e, qIndex)}
+              />
+            </div>
 
             {/* Options Section */}
-            <div className="space-y-2">
+            <div className="space-y-2 mt-4">
               {q.options.map((option, oIndex) => (
-                <div key={oIndex} className="flex items-center gap-2">
+                <div key={oIndex} className="relative flex items-center gap-2">
                   {/* Tick Mark (Correct Answer Selector) */}
                   <CheckCircle
                     size={24}
@@ -106,8 +159,26 @@ export default function CreateTest() {
                     } hover:text-green-700`}
                     onClick={() => selectCorrectOption(qIndex, oIndex)}
                   />
-                  {/* Option Input */}
-                  <input type="text" placeholder={option} className="block w-full bg-gray-300 p-2 rounded" />
+                  
+                  {/* Option Input with Image Icon */}
+                  <div className="relative w-full">
+                    <input 
+                      type="text" 
+                      placeholder={option} 
+                      className="block w-full bg-gray-300 p-2 rounded pr-10" 
+                    />
+                    <label htmlFor={`option-upload-${qIndex}-${oIndex}`} className="absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer text-blue-500">
+                      <Image size={24} />
+                    </label>
+                    <input
+                      type="file"
+                      id={`option-upload-${qIndex}-${oIndex}`}
+                      className="hidden"
+                      accept="image/*"
+                      onChange={(e) => handleImageUpload(e, qIndex, oIndex)}
+                    />
+                  </div>
+
                   {/* Remove Option */}
                   <X
                     size={20}
@@ -137,7 +208,8 @@ export default function CreateTest() {
 
       {/* Create Test Button */}
       <div className="text-center mt-8">
-        <button className="bg-blue-950 text-white py-2 px-6 rounded">Create Test</button>
+       <Link to="/"> <button className="bg-blue-800 cursor-pointer hover:bg-blue-950 text-white py-2 px-6 rounded">Create Test</button>
+       </Link>
       </div>
     </div>
   );

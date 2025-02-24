@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Search } from "lucide-react";
+import {Link} from "react-router-dom";
 
 const Button = ({ label, onClick, variant = "primary" }) => {
   return (
@@ -24,7 +25,7 @@ const TestCard = ({ id, title, date, onDelete }) => {
         <p className="font-semibold text-gray-600">{date}</p>
       </div>
       <div className="space-x-2">
-        <Button label="Update" onClick={()=>{} }  />
+        <Link to={"/createTest"}><Button label="Update" /></Link>
         <Button label="Delete" onClick={() => onDelete(id)} variant="danger" />
       </div>
     </div>
