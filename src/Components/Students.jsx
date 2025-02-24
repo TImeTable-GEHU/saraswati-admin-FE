@@ -3,15 +3,14 @@ import profileImage from '../assets/profile.png';
 import PopUp from './PopUp';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Papa from 'papaparse';
+
 
 const Students = () => {
     const notify = () => toast("Data updated successfully.");
 
     const [data, setData] = useState([]);
     const [filterval, setFilterval] = useState("");
-    const [popUpData, setPopUpData] = useState(null);
-    const [selectedFile,setSelectedFile]=useState(null)
+    const [popUpData, setPopUpData] = useState(null)
 
     const fetchData = async (endpoint) => {
         try {
@@ -35,11 +34,14 @@ const Students = () => {
         }
     };
 
+    const handleUpload=()=>{
+        console.log("Uploading to backend.\n After fetching from backend then it will be shown to frontend.")
+    }
+
     const updateStudent = (id, name, section) => {
         setData(data.map(student => student.id === id ? { ...student, title: name, section: section } : student));
     };
 
-   
 
     return (
         <main className="py-5 px-20 relative">
@@ -48,10 +50,10 @@ const Students = () => {
             <div>
                 <div className='flex justify-between items-center'>
                     <h2 className='text-4xl font-bold text-gray-800'>Manage Students</h2>
-                    <img width="50" src='https://d.gehu.ac.in/uploads/image/E3KQXnnu-Prof-Dr-Kamal-Ghanshala.jpg' className='rounded-full relative' alt="Profile" />
+                    <img id="ganshu" width="50" src='https://d.gehu.ac.in/uploads/image/E3KQXnnu-Prof-Dr-Kamal-Ghanshala.jpg' className='rounded-full fixed top-10 right-10' alt="Profile"/>
                 </div>
             </div>
-            <div className='flex p-5'>
+            <div className='flex p-5 justify-start'>
                 <div className="flex rounded-md border-2 border-blue-500 overflow-hidden max-w-md mx-auto">
                     <input type="text" placeholder="Search Student Id" onChange={(e) => setFilterval(e.target.value)}
                         className="w-full outline-none bg-white text-gray-600 text-sm px-4 py-2" />
@@ -64,11 +66,17 @@ const Students = () => {
                     </button>
                 </div>
             </div>
-            <div className="">
-                <div className="max-w-md mx-auto">
+            <div className="flex items-end justify-center gap-2 p-2">
+                <div className="">
                     <label className="text-base text-gray-500 font-semibold mb-2 block text-center">Add Students List</label>
-                    <input /*onChange={handleFileUpload}*/ type="file"
+                    <input type="file"
                         className="w-full text-gray-400 font-semibold text-sm bg-white border file:cursor-pointer cursor-pointer file:border-0 file:py-3 file:px-4 file:mr-4 file:bg-gray-100 file:hover:bg-gray-200 file:text-gray-500 rounded" />
+                </div>
+                <div className='flex items-baseline'>
+                    <button onClick={() => handleUpload()}
+                    className="px-4 py-1 rounded-full bg-gradient-to-b from-blue-500 to-blue-600 text-white focus:ring-2 focus:ring-blue-400 hover:shadow-xl transition duration-200 mx-1">
+                    Add Students
+                </button>
                 </div>
             </div>
             <div className="flex justify-between items-center my-5">
@@ -100,7 +108,7 @@ const Students = () => {
                                 <td className="py-2 px-4 text-center">{student.section || "B.Tech CSE III D"}</td>
                                 <td className="py-2 px-4 text-center">
                                     <button onClick={() => setPopUpData(student)}
-                                        className="px-4 py-1 rounded-full bg-gradient-to-b from-blue-500 to-blue-600 text-white focus:ring-2 focus:ring-blue-400 hover:shadow-xl transition duration-200 mx-1">
+                                        className="px-4 my-2 py-1 rounded-full bg-gradient-to-b from-blue-500 to-blue-600 text-white focus:ring-2 focus:ring-blue-400 hover:shadow-xl transition duration-200 mx-1">
                                         Update
                                     </button>
 
